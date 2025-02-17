@@ -1,0 +1,30 @@
+Ví dụ trong project này: 
+
+Để tạo một Author và đưa nó lên cả client và server, bạn có thể làm theo các bước sau:
+
+---  Thêm Author vào Server (Backend)
+1. Tạo model hoặc class đại diện cho Author.
+2. Tạo route để xử lý request liên quan đến Author (GET, POST, PUT, DELETE).
+3. Thêm logic vào controller để xử lý dữ liệu Author.
+4. Sau đó, trong server/index.js hoặc server/app.js, import và sử dụng route
+
+--- Gửi Yêu Cầu Từ Client (Frontend)
+Trong React, tạo một service để gọi API lấy danh sách tác giả. ( client/src/services/authorService.js )
+
+--- Hiển Thị Author Trên Giao Diện React
+Tạo một component để hiển thị danh sách tác giả. ( client/src/components/AuthorList.js )
+
+--- Tích Hợp Component Vào Ứng Dụng React
+Thêm AuthorList vào App.js hoặc trang tương ứng
+
+Ví dụ trên có nghĩa là: 
+1/ Tạo Models/Author.model.js trong server 
+2/ Tạo Routes/Author: bên trong sẽ có 4 file: creatAuthor.js (GET), getAllAuthor.js (POST), updateAuthor.js (PUT), deleteAuthor.js (DELETE) (server)
+3/ Tạo Controller/Author: bên trong cũng sẽ có 4 file:creatAuthor, getAllAuthor, updateAuthor, deleteAuthor 
+4/ Thông thường mục app.js sẽ nằm trong folder view/app.js. Vào app.js để import và sử dụng route
+5/ Trong client/src, mình sẽ không dùng service mà dùng redux\reducers. Trong redux\reducers,tạo folder authors và gọi API lấy danh sách tác giả. Cũng tạo 4 file: createAuthor.js, getAllAuthor.js, updateAuthor.js, deleteAuthor.js
+
+6/ Vào client/src/components\Layout, tạo file Navbar.jsx và import vào 
+7/ Để hiển thị Author trong giao diện React, tạo thêm pages/Austhor.jsx
+8/ Tích hợp Component vào React, thêm listAuthor vào App.js 
+9/ Chạy ứng dụng
