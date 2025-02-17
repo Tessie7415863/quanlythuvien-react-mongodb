@@ -7,8 +7,6 @@ const deleteMajor = async (req, res) => {
 
     const major = await Major.findByIdAndDelete(id); // Xóa khoa theo ID
 
-    console.log("Deleted Major:", major);
-
     if (!major) {
       return failCode(res, null, "Không tìm thấy Ngành để xóa");
     }

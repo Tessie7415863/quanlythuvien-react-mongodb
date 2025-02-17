@@ -18,10 +18,10 @@ const getAllMajors = createSlice({
 export const { setListMajors } = getAllMajors.actions;
 export default getAllMajors.reducer;
 
-export const CallGetAllMajors = () => {
+export const CallGetAllMajors = ({ keyword, sortBy, page, limit, order }) => {
     return async (dispatch) => {
         try {
-            const result = await http.get("/major/get-all-majors");
+            const result = await http.get(`/major/get-all-majors?page=${page}&limit=${limit}&sortBy=${sortBy}&keyword=${keyword}&order=${order}`);
             dispatch(setListMajors(result.data.content));
             return result.data.content;
         } catch (error) {

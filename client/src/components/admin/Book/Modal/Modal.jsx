@@ -98,7 +98,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, formData, handleChange, handleSubm
                             <label className="block text-gray-700 mb-1">Ngành</label>
                             <select name="major" value={formData.major} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded">
                                 <option value="">Chọn ngành</option>
-                                {listMajors?.map((major, index) => (
+                                {listMajors?.result?.map((major, index) => (
                                     <option key={index} value={major._id}>{major.name}</option>
                                 ))}
                             </select>
@@ -107,7 +107,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, formData, handleChange, handleSubm
                             <label className="block text-gray-700 mb-1">Môn học</label>
                             <select name="subject" value={formData.subject} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded">
                                 <option value="">Chọn môn học</option>
-                                {listSubjects?.map((subject, index) => (
+                                {listSubjects?.result?.map((subject, index) => (
                                     <option key={index} value={subject._id}>{subject.name}</option>
                                 ))}
                             </select>
@@ -116,7 +116,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, formData, handleChange, handleSubm
                             <label className="block text-gray-700 mb-1">Khoa</label>
                             <select name="department" value={formData.department} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded">
                                 <option value="">Chọn khoa</option>
-                                {listDepartments?.map((department, index) => (
+                                {listDepartments?.result?.map((department, index) => (
                                     <option key={index} value={department._id}>{department.name}</option>
                                 ))}
                             </select>

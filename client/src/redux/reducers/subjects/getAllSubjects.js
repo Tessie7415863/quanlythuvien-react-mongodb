@@ -18,10 +18,10 @@ const getAllSubjects = createSlice({
 export const { setListSubjects } = getAllSubjects.actions;
 export default getAllSubjects.reducer;
 
-export const CallGetAllSubjects = () => {
+export const CallGetAllSubjects = ({ keyword, sortBy, page, limit, order }) => {
     return async (dispatch) => {
         try {
-            const result = await http.get("/subject/get-all-subjects");
+            const result = await http.get(`/subject/get-all-subjects?page=${page}&limit=${limit}&sortBy=${sortBy}&keyword=${keyword}&order=${order}`);
             dispatch(setListSubjects(result.data.content));
             return result.data.content;
         } catch (error) {

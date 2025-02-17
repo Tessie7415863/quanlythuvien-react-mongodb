@@ -7,8 +7,6 @@ const deleteSubject = async (req, res) => {
 
     const subject = await Subject.findByIdAndDelete(id); // Xóa môn học theo ID
 
-    console.log("Deleted Subject:", subject);
-
     if (!subject) {
       return failCode(res, null, "Không tìm thấy Môn học để xóa");
     }

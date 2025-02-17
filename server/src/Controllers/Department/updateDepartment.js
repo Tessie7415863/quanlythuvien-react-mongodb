@@ -13,9 +13,6 @@ const updateDepartment = async (req, res) => {
       },
       { new: true }
     );
-    console.log(id);
-
-    console.log(department);
 
     if (!department) {
       return failCode(res, null, "Không tìm thấy khoa");

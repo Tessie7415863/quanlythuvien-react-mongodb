@@ -7,8 +7,6 @@ const deleteAuthor = async (req, res) => {
 
     const author = await Author.findByIdAndDelete(id); // Xóa tác giả theo ID
 
-    console.log("Deleted Author:", author);
-
     if (!author) {
       return failCode(res, null, "Không tìm thấy tác giả để xóa");
     }

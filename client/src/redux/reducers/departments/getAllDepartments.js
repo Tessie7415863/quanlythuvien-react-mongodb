@@ -18,10 +18,10 @@ const getAllDepartments = createSlice({
 export const { setListDepartments } = getAllDepartments.actions;
 export default getAllDepartments.reducer;
 
-export const CallGetAllDepartments = () => {
+export const CallGetAllDepartments = ({ keyword, sortBy, page, limit, order }) => {
     return async (dispatch) => {
         try {
-            const result = await http.get("/department/get-all-departments");
+            const result = await http.get(`/department/get-all-departments?page=${page}&limit=${limit}&sortBy=${sortBy}&keyword=${keyword}&order=${order}`);
             dispatch(setListDepartments(result.data.content));
             return result.data.content;
         } catch (error) {

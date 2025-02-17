@@ -13,9 +13,6 @@ const updateSubject = async (req, res) => {
       },
       { new: true }
     );
-    console.log(id);
-
-    console.log(subject);
 
     if (!subject) {
       return failCode(res, null, "Không tìm thấy Môn học");

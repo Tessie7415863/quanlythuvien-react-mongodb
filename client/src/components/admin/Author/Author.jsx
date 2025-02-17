@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { CallUpdateAuthor } from '../../../redux/reducers/authors/updateAuthor';
 import { CallCreateAuthor } from '../../../redux/reducers/authors/createAuthor';
 import Modal from './Modal/Modal';
-import ModalDelete from '../Book/Modal/ModalDelete';
+import ModalDelete from './Modal/ModalDelete';
 import { CallDeleteAuthor } from '../../../redux/reducers/authors/deleteAuthor';
 const Author = () => {
 	const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ const Author = () => {
 			date_of_birth: author.date_of_birth,
 			date_of_death: author.date_of_death,
 		});
-		setIdAuthor(author);
+		setIdAuthor(author._id);
 	}
 
 	const handleSearch = (e) => {
@@ -91,8 +91,6 @@ const Author = () => {
 		else {
 			try {
 				const res = await CallCreateAuthor(formData);
-				console.log(res);
-
 				if (res?.status === 200) {
 					Swal.fire({
 						icon: "success",
@@ -120,8 +118,6 @@ const Author = () => {
 		}
 
 	};
-
-
 
 	// Gọi API lấy danh sách tác giả
 	useEffect(() => {
@@ -183,7 +179,9 @@ const Author = () => {
 			date_of_death: "",
 		});
 	}
-
+	const handlePageChange = (page) => {
+		setPage(page);
+	};
 
 	return (
 		<div className="container mx-auto p-4">
@@ -208,16 +206,46 @@ const Author = () => {
 				</button>
 			</header>
 
-			{/* Thanh tìm kiếm và sắp xếp
-            <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
-                <input
-                    type="text"
-                    placeholder='Tìm kiếm tác giả ...'
-                    value={keyword}
-                    onChange={handleSearch}
-                    className="w-full md:w-64 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-            </div> */}
+			{/* Thanh tìm kiếm và sắp xếp */}
+			<div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
+				<input
+					type="text"
+					placeholder='Tìm kiếm tác giả ...'
+					value={keyword}
+					onChange={handleSearch}
+					className="w-full md:w-64 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<div>
+					<label className="block text-gray-700 mb-1">Sắp xếp theo tên</label>
+					<select
+						value={order}
+						onChange={(e) => {
+							setOrder(e.target.value);
+						}}
+						className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded shadow"
+					>
+						<option value="asc">A_Z</option>
+						<option value="desc">Z_A</option>
+					</select>
+				</div>
+
+				{/* Dropdown chọn số lượng bản ghi mỗi trang */}
+				<div>
+					<label className="block text-gray-700 mb-1">Số lượng bản ghi/trang</label>
+					<select
+						value={limit}
+						onChange={(e) => {
+							setLimit(parseInt(e.target.value));
+						}}
+						className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded shadow"
+					>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+					</select>
+				</div>
+			</div>
 			{/* Dropdown sắp xếp theo tên --- làm sau */}
 			{/* Dropdown chọn số lượng bản ghi mỗi trang --- làm sau*/}
 
@@ -251,7 +279,7 @@ const Author = () => {
 											Sửa
 										</button>
 										<button
-											onClick={() => handleOpenModalDelete(author)}
+											onClick={() => handleOpenModalDelete(author._id)}
 											className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded"
 										>
 											Xóa
@@ -263,6 +291,25 @@ const Author = () => {
 						))}
 					</tbody>
 				</table>
+			</div>
+			<div className="flex justify-between items-center mt-6">
+				<button
+					disabled={page === 1}
+					onClick={() => handlePageChange(page - 1)}
+					className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					Trước
+				</button>
+				<span className="text-gray-700">
+					Trang {page} / {listAuthors?.totalPages}
+				</span>
+				<button
+					disabled={page === listAuthors?.totalPages}
+					onClick={() => handlePageChange(page + 1)}
+					className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					Sau
+				</button>
 			</div>
 			{/* Modal Tạo Tác Giả */}
 			<Modal
@@ -278,7 +325,7 @@ const Author = () => {
 			/>
 			<ModalDelete
 				isOpenModalDelete={isOpenModalDelete}
-				setIsOpenModalDelete={setIsModalOpen}
+				setIsOpenModalDelete={setIsOpenModalDelete}
 				handleSubmitDelete={handleSubmitDelete}
 			/>
 		</div>

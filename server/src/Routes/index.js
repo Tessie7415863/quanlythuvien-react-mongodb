@@ -7,6 +7,9 @@ const login = require("./Auth/login");
 
 const getAllUsers = require("./user/getAllUsers");
 const getUserById = require("./user/getUserById");
+const createUser = require("./user/createUser");
+const updateUser = require("./user/updateUser");
+const deleteUser = require("./user/deleteUser");
 
 const createAuthor = require("./Author/createAuthor");
 const getAllAuthors = require("./Author/getAllAuthors");
@@ -41,6 +44,9 @@ rootRoute.use("/auth", login);
 
 rootRoute.use("/users", getAllUsers);
 rootRoute.use("/users", getUserById);
+rootRoute.use("/users", createUser);
+rootRoute.use("/users", updateUser);
+rootRoute.use("/users", deleteUser);
 
 //author
 rootRoute.use("/author", createAuthor);

@@ -24,8 +24,6 @@ export const CallGetAllAuthors = ({ keyword, sortBy, page, limit, order }) => {
             const result = await http.get(
                 `/author/get-all-authors?page=${page}&limit=${limit}&sortBy=${sortBy}&keyword=${keyword}&order=${order}`
             );
-            console.log(result);
-
             dispatch(setListAuthors(result.data.content));
         } catch (error) {
             console.log(error);

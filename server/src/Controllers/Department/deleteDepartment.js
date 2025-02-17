@@ -7,8 +7,6 @@ const deleteDepartment = async (req, res) => {
 
     const department = await Department.findByIdAndDelete(id); // Xóa khoa theo ID
 
-    console.log("Deleted Department:", department);
-
     if (!department) {
       return failCode(res, null, "Không tìm thấy khoa để xóa");
     }

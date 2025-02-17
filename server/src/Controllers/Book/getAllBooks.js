@@ -27,7 +27,7 @@ const getAllBooks = async (req, res) => {
     const skip = (pageInt - 1) * limitInt;
 
     // Tìm kiếm, sắp xếp và phân trang dữ liệu
-    const books = await Book.find(filter)
+    const result = await Book.find(filter)
       .sort({ [sortBy]: sortOrder })
       .skip(skip)
       .limit(limitInt)
@@ -41,7 +41,7 @@ const getAllBooks = async (req, res) => {
     const totalPages = Math.ceil(totalBooks / limitInt);
     return successCode(
       res,
-      { books, totalBooks, page: pageInt, limit: limitInt, totalPages: totalPages },
+      { result, totalBooks, page: pageInt, limit: limitInt, totalPages: totalPages },
       "Lấy danh sách book thành công"
     );
   } catch (error) {

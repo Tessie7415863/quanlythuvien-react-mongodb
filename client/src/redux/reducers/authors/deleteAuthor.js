@@ -1,10 +1,10 @@
 import { http } from "../../../Utils/baseUrl";
 
-export const CallDeleteAuthor = async (data) => {
+export const CallDeleteAuthor = async (id) => {
     // Xử lý API để xóa tác giả
     try {
-        const result = await http.delete('/author/delete-author', data);
-        return result.data;
+        const result = await http.delete(`/author/delete-author/${id}`);
+        return result
     } catch (error) {
         return error;
     }

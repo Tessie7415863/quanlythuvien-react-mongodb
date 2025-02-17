@@ -13,10 +13,6 @@ const updateMajor = async (req, res) => {
       },
       { new: true }
     );
-    console.log(id);
-
-    console.log(major);
-
     if (!major) {
       return failCode(res, null, "Không tìm thấy Ngành");
     }

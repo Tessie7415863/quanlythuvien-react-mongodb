@@ -64,9 +64,27 @@ const BookForm = () => {
 				limit,
 				order,
 			}));
-			await dispatch(CallGetAllDepartments());
-			await dispatch(CallGetAllMajors());
-			await dispatch(CallGetAllSubjects());
+			await dispatch(CallGetAllDepartments({
+				keyword,
+				sortBy: "title",
+				page,
+				limit,
+				order,
+			}));
+			await dispatch(CallGetAllMajors({
+				keyword,
+				sortBy: "title",
+				page,
+				limit,
+				order,
+			}));
+			await dispatch(CallGetAllSubjects({
+				keyword,
+				sortBy: "title",
+				page,
+				limit,
+				order,
+			}));
 		}
 		fetch();
 	}, []);
@@ -309,7 +327,7 @@ const BookForm = () => {
 						</tr>
 					</thead>
 					<tbody className="divide-y divide-gray-100">
-						{listBooks?.books?.map((book, index) => (
+						{listBooks?.result?.map((book, index) => (
 							<tr key={index} className="hover:bg-gray-100">
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{index + 1}</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{book.title}</td>
