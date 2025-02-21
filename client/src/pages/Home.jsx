@@ -8,9 +8,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { useDispatch, useSelector } from "react-redux";
 import { CallGetALlBooks } from "../redux/reducers/books/getAllBooks";
-// import lib5 from '../../public/images/lib5.jpg'
-// import lib6 from '../../public/images/lib6.jpg'
-// import lib7 from '../../public/images/lib7.jpg'
+
 export default function Home() {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
@@ -39,10 +37,10 @@ export default function Home() {
     return (
         <main className="mx-auto mt-0 pt-24 p-6 bg-blue-200 shadow-lg rounded-lg  dark:shadow-2xl">
             <aside>
-                <h1 className="text-4xl font-semibold text-center text-gray-800 mb-4 dark:text-white" data-aos="fade-up">
+                <h1 className="text-4xl font-semibold text-center text-gray-800 mb-4 dark:text-gray-900" data-aos="fade-up">
                     Chào mừng đến <span className="wave-effect">ITCLib</span> - Thư viện số của bạn
                 </h1>
-                <p className="text-gray-600 text-center dark:text-gray-300" data-aos="fade-up" data-aos-delay="300">
+                <p className="text-gray-600 text-center dark:text-gray-700" data-aos="fade-up" data-aos-delay="300">
                     Khám phá các tài nguyên kỹ thuật số được thiết kế riêng cho sinh viên và giảng viên.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row justify-center items-center sm:space-x-6 text-center">
@@ -82,18 +80,19 @@ export default function Home() {
                 <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/2">
                         <Swiper navigation pagination modules={[Navigation, Pagination]} className="mySwiper">
-                            {[1, 2, 3].map((src, index) => (
+                            {["/images/lib5.jpg", "/images/lib6.jpg", "/images/lib7.jpg"].map((src, index) => (
                                 <SwiperSlide key={index}>
                                     <img src={src} alt={`Library ${index}`} className="rounded-lg w-full min-h-[340px] h-[340px] object-cover" />
                                 </SwiperSlide>
                             ))}
                         </Swiper>
+
                     </div>
                     <div className="md:w-1/2 flex flex-col items-center justify-center bg-gray-50 p-6 rounded-lg shadow dark:bg-gray-700">
                         <h3 className="text-xl font-semibold sm:text-2xl dark:text-white">Khám Phá Kho Sách ITC</h3>
                         <div className="mt-4 flex flex-col sm:flex-row gap-4 w-full">
                             {[
-                                { title: "📚 Sách", desc: "Kho tàng sách học thuật với hơn 250 quyển.", link: "/book", color: "bg-blue-500 hover:bg-blue-700" },
+                                { title: "📚 Sách", desc: "Kho tàng sách học thuật.", link: "/book", color: "bg-green-500 hover:bg-blue-600" },
                                 { title: "📄 Tài Liệu", desc: "Kho tài liệu học tập chất lượng.", link: "/tai-lieu", color: "bg-green-500 hover:bg-green-600" }
                             ].map((item, index) => (
                                 <div key={index} className="w-full sm:w-1/2 bg-white p-4 shadow rounded-lg text-center dark:bg-gray-800">
