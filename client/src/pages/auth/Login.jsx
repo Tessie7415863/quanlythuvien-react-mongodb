@@ -24,11 +24,14 @@ export default function Login() {
         icon: "success",
         title: "Đăng nhập thành công!",
         showConfirmButton: false,
-        timer: 3000, // Hiển thị thông báo trong 3 giây
+        timer: 3000,
       });
-      // Đợi 3 giây trước khi chuyển trang
       setTimeout(() => {
-        navigate("/");
+        if (res.data.content.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }, 3000);
     } else {
       Swal.fire({
