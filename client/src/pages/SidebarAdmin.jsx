@@ -11,7 +11,7 @@ export default function SidebarAdmin() {
     }
     const signOut = () => {
         localStorage.removeItem("dataUser");
-        window.location.href = "/";
+        window.location.href = "/dashboard";
     }
     return (
         <>

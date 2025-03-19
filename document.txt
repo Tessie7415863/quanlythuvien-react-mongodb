@@ -21,9 +21,9 @@ Khởi tạo dự án
 	4.trong src tạo lần lượt các foler Models(là khai báo database, tạo thuộc tính schema)
 	5.trong src tạo lần lượt các foler Controllers(folder này là folder để viết những api chính)
 	6.trong src tạo lần lượt các foler Routes(sẽ sử dụng Controllers và middlewares để kết nối với file app.js)
-	7.trong src tạo lần lượt các foler view(tạo app.js)
 	
-	*** Khi tạo hết tất cả folder thì viết API trong Controllers -> Routes -> Routes/index.js 
+	*** Tạo xong các bước trên -> bắt đầu từ Models (table trong db)
+	*** Viết API trong Controllers -> Routes -> Routes/index.js 	
 
 sử dụng nodemon phải khai báo lại trong file packet.json( "start": "nodemon src/view/app.js")
 
