@@ -16,15 +16,24 @@ const getAllUsers = createSlice({
 })
 export const { setListUsers } = getAllUsers.actions;
 export default getAllUsers.reducer;
-export const CallGetAllUsers = ({ keyword, sortBy, page, limit, order, }) => {
+export const CallGetAllUsers = (params = {}) => {
     return async (dispatch) => {
         try {
-            const result = await http.get(
-                `/users/get-all-users?page=${page}&limit=${limit}&sortBy=${sortBy}&keyword=${keyword}&order=${order}`
-            );
+            const { keyword, sortBy, page, limit, order } = params; // Không có giá trị mặc định
+
+            const queryParams = new URLSearchParams({
+                ...(keyword && { keyword }),
+                ...(sortBy && { sortBy }),
+                ...(page && { page }),
+                ...(limit && { limit }),
+                ...(order && { order }),
+            }).toString(); // Loại bỏ tham số có giá trị falsy như undefined hoặc null
+
+            const result = await http.get(`/users/get-all-users?${queryParams}`);
+
             dispatch(setListUsers(result.data.content));
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 };

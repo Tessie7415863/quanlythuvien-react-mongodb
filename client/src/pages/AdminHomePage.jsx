@@ -4,9 +4,11 @@ import SidebarAdmin from './SidebarAdmin'
 
 export default function AdminHomePage() {
     return (
-        <div className='flex h-screen overflow-x-hidden'>
-            <SidebarAdmin />
-            <div className='p-4 sm:ml-22 min-w-full w-full'>
+        <div className='flex h-screen overflow-x-hidden w-full'>
+            <div className="sm:w-[15%]">
+                <SidebarAdmin />
+            </div>
+            <div className='p-4 sm:w-[85%]'>
                 <Outlet />
             </div>
         </div>

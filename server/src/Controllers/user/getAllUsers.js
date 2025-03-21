@@ -1,5 +1,5 @@
 const User = require("../../Models/User.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const getAllUsers = async (req, res) => {
   const { keyword, sortBy = "first_name",
@@ -22,10 +22,14 @@ const getAllUsers = async (req, res) => {
       .limit(limitInt)
     const totalUsers = await User.countDocuments(filter)
     const totalPages = Math.ceil(totalUsers / limitInt);
-    if (result) {
-      return successCode(res, { result, totalUsers, page: pageInt, totalPages: totalPages }, "lấy danh sách ngành thành công");
+    if (!keyword || !sortBy || !page || !limit || !order) {
+      const result = await User.find()
+      return successCode(res, { result, totalUsers }, "lấy danh sách user thông");
     }
-    return failCode(res, "", "Danh sách ngành trống");
+    if (result) {
+      return successCode(res, { result, totalUsers, page: pageInt, totalPages: totalPages }, "lấy danh sách user thành công");
+    }
+    return failCode(res, "", "Danh sách user trống");
   } catch (error) {
     return errorCode(error, "Lỗi 500");
   }

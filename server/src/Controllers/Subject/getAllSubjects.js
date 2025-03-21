@@ -1,5 +1,5 @@
 const Subject = require("../../Models/Subject.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const getAllSubjects = async (req, res) => {
   const {

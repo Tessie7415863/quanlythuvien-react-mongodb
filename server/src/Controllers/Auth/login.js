@@ -1,5 +1,5 @@
 const User = require("../../Models/User.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, errorCode, successCodeLogin } = require("../../config/response");
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -8,7 +8,7 @@ const login = async (req, res) => {
     const checkEmail = await User.findOne({ email });
     //checkEmail là check xem email có tồn tại trong table User hay không. Nếu có -> check tới password
     if (checkEmail && password === checkEmail.password) {
-      return successCode(
+      return successCodeLogin(
         res,
         {
           username: checkEmail.username,

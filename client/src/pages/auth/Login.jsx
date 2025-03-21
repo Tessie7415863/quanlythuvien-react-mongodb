@@ -19,6 +19,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const res = await CallLogin(formData);
+
     if (res && res.status === 200) {
       Swal.fire({
         icon: "success",

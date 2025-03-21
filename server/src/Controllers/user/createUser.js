@@ -1,5 +1,5 @@
 const User = require('../../Models/User.model');
-const { failCode, successCode, errorCode } = require('../../config/reponse');
+const { failCode, successCode, errorCode } = require('../../config/response');
 const createUser = async (req, res) => {
     try {
         const { first_name,
