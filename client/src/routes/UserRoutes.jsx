@@ -5,12 +5,16 @@ import Home from "../pages/Home.jsx";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import Book from "../features/user/Book.jsx";
+import BorrowBook from "../features/user/BorrowBook.jsx";
+import BorrowHistory from "../features/user/BorrowHistory.jsx";
 export default function UserRoutes() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
         <Route index element={<Home />} />
         <Route path="book" element={<Book />} />
+        <Route path="borrow-book/:id" element={<BorrowBook />} />
+        <Route path="borrow-history" element={<BorrowHistory />} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />

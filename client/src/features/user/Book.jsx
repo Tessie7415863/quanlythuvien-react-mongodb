@@ -6,9 +6,10 @@ import { CallGetAllDepartments } from "../../redux/reducers/departments/getAllDe
 import { CallGetAllMajors } from "../../redux/reducers/majors/getAllMajors";
 import { CallGetAllSubjects } from "../../redux/reducers/subjects/getAllSubjects";
 import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
 export default function Book() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // Các state để điều khiển tìm kiếm, sắp xếp và phân trang
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -92,7 +93,6 @@ export default function Book() {
       </div>
     </div>
   );
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile menu button */}
@@ -139,7 +139,7 @@ export default function Book() {
                 >
                   <div className="mb-4">
                     <img
-                      src={item.cover ? item.cover : "/default-book-cover.jpg"}
+                      src={item.image ? item.image : "/default-book-cover.jpg"}
                       alt={item.title}
                       className="w-full h-48 object-cover rounded mb-4"
                     />
@@ -155,7 +155,7 @@ export default function Book() {
                     </p>
                   </div>
                   <button
-                    onClick={() => alert(`Mượn sách: ${item.title}`)}
+                    onClick={() => navigate(`/borrow-book/${item._id}`)}
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                   >
                     Mượn sách

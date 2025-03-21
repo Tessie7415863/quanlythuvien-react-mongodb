@@ -20,6 +20,7 @@ const BookForm = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    image: "",
     published_date: "",
     isbn: "",
     author: "",
@@ -111,7 +112,6 @@ const BookForm = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // Hàm xử lý khi người dùng ấn nút tạo sách hoặc cập nhật sách
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -119,7 +119,8 @@ const BookForm = () => {
       !formData.author ||
       !formData.major ||
       !formData.subject ||
-      !formData.department
+      !formData.department ||
+      !formData.image
     ) {
       Swal.fire({
         icon: "error",
@@ -238,6 +239,7 @@ const BookForm = () => {
       major: "",
       subject: "",
       department: "",
+      image: "",
     });
   };
   const handleEdit = (book) => {
@@ -252,6 +254,7 @@ const BookForm = () => {
       major: book.major._id,
       subject: book.subject?._id,
       department: book.department._id,
+      image: book.image,
     });
     setIdBook(book._id);
   };
@@ -272,6 +275,7 @@ const BookForm = () => {
     { key: "title", label: "Tên sách" },
     { key: "author.name", label: "Tác giả" },
     { key: "major.name", label: "Ngành học" },
+    { key: "image", label: "Ảnh" },
     { key: "subject.name", label: "Môn học" },
     { key: "department.name", label: "Khoa" },
     { key: "published_date", label: "Ngày xuất bản" },
@@ -294,13 +298,31 @@ const BookForm = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <HeaderAndSearch keyword={keyword} handleSearch={handleSearch} setIsModalOpen={setIsModalOpen} setOrder={setOrder} order={order} setLimit={setLimit} limit={limit} title={"Quản lý sách"} buttonName={"Thêm sách"} />
+      <HeaderAndSearch
+        keyword={keyword}
+        handleSearch={handleSearch}
+        setIsModalOpen={setIsModalOpen}
+        setOrder={setOrder}
+        order={order}
+        setLimit={setLimit}
+        limit={limit}
+        title={"Quản lý sách"}
+        buttonName={"Thêm sách"}
+      />
 
       {/* Bảng */}
-      <ReusableTable columns={columns} data={listBooks?.result} actions={actions} />
+      <ReusableTable
+        columns={columns}
+        data={listBooks?.result}
+        actions={actions}
+      />
       {/* Phân trang */}
 
-      <Pagination page={page} listBooks={listBooks} handlePageChange={handlePageChange} />
+      <Pagination
+        page={page}
+        listBooks={listBooks}
+        handlePageChange={handlePageChange}
+      />
 
       {/* Modal Tạo sách */}
       <Modal
