@@ -1,5 +1,5 @@
 const Book = require("../../Models/Book.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const getAllBooks = async (req, res) => {
   try {
@@ -39,6 +39,19 @@ const getAllBooks = async (req, res) => {
     // Tổng số sách trong database (dùng cho phân trang)
     const totalBooks = await Book.countDocuments(filter);
     const totalPages = Math.ceil(totalBooks / limitInt);
+    if (!keyword || !sortBy || !page || !limit || !order) {
+      const result = await Book.find()
+        .populate("author", "name")
+        .populate("subject", "name")
+        .populate("department", "name")
+        .populate("major", "name");
+
+      return successCode(
+        res,
+        { result, totalBooks, page: pageInt, limit: limitInt, totalPages: totalPages },
+        "Lấy danh sách book"
+      );
+    }
     return successCode(
       res,
       { result, totalBooks, page: pageInt, limit: limitInt, totalPages: totalPages },

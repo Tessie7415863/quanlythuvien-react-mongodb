@@ -1,4 +1,4 @@
-const { successCode, failCode, errorCode } = require("../../config/reponse");
+const { successCode, failCode, errorCode } = require("../../config/response");
 const User = require('../../Models/User.model')
 const deleteUser = async (req, res) => {
     const { id } = req.params;

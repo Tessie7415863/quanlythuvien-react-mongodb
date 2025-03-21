@@ -4,7 +4,7 @@ import DefaultLayout from "../layout/DefaultLayout.jsx";
 import Home from "../pages/Home.jsx";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
-import Book from "../components/user/Book.jsx";
+import Book from "../features/user/Book.jsx";
 export default function UserRoutes() {
   return (
     <Routes>

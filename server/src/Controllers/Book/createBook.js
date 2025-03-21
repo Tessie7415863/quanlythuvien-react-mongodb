@@ -3,7 +3,7 @@ const Author = require("../../Models/Author.model");
 const Major = require("../../Models/Major.model");
 const Subject = require("../../Models/Subject.model");
 const Department = require("../../Models/Department.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const createBook = async (req, res) => {
   try {

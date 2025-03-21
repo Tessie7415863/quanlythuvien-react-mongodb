@@ -5,6 +5,7 @@ import getAllMajors from "./reducers/majors/getAllMajors";
 import getAllDepartments from "./reducers/departments/getAllDepartments";
 import getAllSubjects from "./reducers/subjects/getAllSubjects";
 import getAllUsers from "./reducers/user/getAllUser";
+import getAllBorrows from "./reducers/borrows/getAllBorrows";
 export const store = configureStore({
     reducer: {
         getAllBooks,
@@ -12,7 +13,8 @@ export const store = configureStore({
         getAllMajors,
         getAllDepartments,
         getAllSubjects,
-        getAllUsers
+        getAllUsers,
+        getAllBorrows
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 })

@@ -1,5 +1,5 @@
 const Author = require("../../Models/Author.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const deleteAuthor = async (req, res) => {
   try {

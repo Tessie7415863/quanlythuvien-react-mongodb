@@ -1,5 +1,5 @@
 const Book = require("../../Models/Book.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const updateBook = async (req, res) => {
   try {

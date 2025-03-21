@@ -1,4 +1,4 @@
-const { successCode, errorCode } = require("../../config/reponse");
+const { successCode, errorCode } = require("../../config/response");
 const Author = require("../../Models/Author.model");
 
 const createAuthor = async (req, res) => {

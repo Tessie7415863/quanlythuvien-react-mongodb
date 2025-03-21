@@ -1,4 +1,4 @@
-const { failCode, successCode } = require('../../config/reponse');
+const { failCode, successCode } = require('../../config/response');
 const User = require('../../Models/User.model');
 
 const updateUser = async (req, res) => {

@@ -1,5 +1,5 @@
 const Department = require("../../Models/Department.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const getAllDepartments = async (req, res) => {
   const { keyword, sortBy = "name",

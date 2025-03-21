@@ -1,5 +1,5 @@
 const Major = require("../../Models/Major.model");
-const { failCode, successCode, errorCode } = require("../../config/reponse");
+const { failCode, successCode, errorCode } = require("../../config/response");
 
 const createMajor = async (req, res) => {
   try {

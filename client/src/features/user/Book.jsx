@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { CallGetALlBooks } from '../../redux/reducers/books/getAllBooks';
-import { CallGetAllAuthors } from '../../redux/reducers/authors/getAllAuthors';
-import { CallGetAllDepartments } from '../../redux/reducers/departments/getAllDepartments';
-import { CallGetAllMajors } from '../../redux/reducers/majors/getAllMajors';
-import { CallGetAllSubjects } from '../../redux/reducers/subjects/getAllSubjects';
-
 export default function Book() {
     const dispatch = useDispatch();
 

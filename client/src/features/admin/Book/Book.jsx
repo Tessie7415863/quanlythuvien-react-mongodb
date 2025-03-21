@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { CallGetALlBooks } from "../../../redux/reducers/books/getAllBooks";
@@ -13,6 +11,9 @@ import Modal from "./Modal/Modal";
 import { CallUpdateBook } from "../../../redux/reducers/books/updateBook";
 import ModalDelete from "./Modal/ModalDelete";
 import { CallDeleteBook } from "../../../redux/reducers/books/deleteBook";
+import HeaderAndSearch from "../../../components/admin/HeaderAndSearch";
+import ReusableTable from "../../../components/admin/ReusableTable";
+import Pagination from "../../../components/admin/Pagination";
 
 const BookForm = () => {
   // Khai báo state
@@ -37,7 +38,6 @@ const BookForm = () => {
   const [idBook, setIdBook] = useState("");
   const dispatch = useDispatch();
   const listBooks = useSelector((state) => state.getAllBooks.listBooks);
-  console.log(listBooks);
 
   const listAuthors = useSelector((state) => state.getAllAuthors.listAuthors);
   const listDepartments = useSelector(
@@ -250,7 +250,7 @@ const BookForm = () => {
       isbn: book.isbn,
       author: book.author._id,
       major: book.major._id,
-      subject: book.subject._id,
+      subject: book.subject?._id,
       department: book.department._id,
     });
     setIdBook(book._id);
@@ -267,186 +267,40 @@ const BookForm = () => {
   const handlePageChange = (page) => {
     setPage(page);
   };
+  // Cấu hình bảng
+  const columns = [
+    { key: "title", label: "Tên sách" },
+    { key: "author.name", label: "Tác giả" },
+    { key: "major.name", label: "Ngành học" },
+    { key: "subject.name", label: "Môn học" },
+    { key: "department.name", label: "Khoa" },
+    { key: "published_date", label: "Ngày xuất bản" },
+    { key: "isbn", label: "ISBN" },
+  ];
+
+  // Cấu hình các nút thao tác (sửa, xóa)
+  const actions = [
+    {
+      label: "Sửa",
+      onClick: (book) => handleEdit(book),
+      className: "bg-yellow-500 hover:bg-yellow-600",
+    },
+    {
+      label: "Xóa",
+      onClick: (book) => handleOpenModalDelete(book._id),
+      className: "bg-red-500 hover:bg-red-600",
+    },
+  ];
 
   return (
     <div className="container mx-auto p-4">
-      {/* Header */}
-      <header className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
-          Quản lý sách
-        </h2>
-        <button
-          type="button"
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow"
-          onClick={() => setIsModalOpen(true)}
-        >
-          {/* Icon (tùy chọn) */}
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Tạo Sách
-        </button>
-      </header>
+      <HeaderAndSearch keyword={keyword} handleSearch={handleSearch} setIsModalOpen={setIsModalOpen} setOrder={setOrder} order={order} setLimit={setLimit} limit={limit} title={"Quản lý sách"} buttonName={"Thêm sách"} />
 
-      {/* Thanh tìm kiếm và sắp xếp */}
-      <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
-        <input
-          type="text"
-          placeholder="Tìm kiếm sách..."
-          value={keyword}
-          onChange={handleSearch}
-          className="w-full md:w-64 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <div className="flex flex-col md:flex-row gap-4 items-center">
-          {/* Dropdown sắp xếp theo tên */}
-          <div>
-            <label className="block text-gray-700 mb-1">Sắp xếp theo tên</label>
-            <select
-              value={order}
-              onChange={(e) => {
-                setOrder(e.target.value);
-              }}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded shadow"
-            >
-              <option value="asc">A_Z</option>
-              <option value="desc">Z_A</option>
-            </select>
-          </div>
-
-          {/* Dropdown chọn số lượng bản ghi mỗi trang */}
-          <div>
-            <label className="block text-gray-700 mb-1">
-              Số lượng bản ghi/trang
-            </label>
-            <select
-              value={limit}
-              onChange={(e) => {
-                setLimit(parseInt(e.target.value));
-              }}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded shadow"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Bảng danh sách sách */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                #
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Tiêu đề
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Tác giả
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Nganh học
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Môn học
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Khoa
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Ngày xuất bản
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                ISBN
-              </th>
-              <th className="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Thao tác
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {listBooks?.result?.map((book, index) => (
-              <tr key={index} className="hover:bg-gray-100">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {index + 1}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.title}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.author.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.major.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.subject?.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.department.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.published_date}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {book.isbn}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEdit(book)}
-                      className="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
-                    >
-                      Sửa
-                    </button>
-                    <button
-                      onClick={() => handleOpenModalDelete(book._id)}
-                      className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded"
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
+      {/* Bảng */}
+      <ReusableTable columns={columns} data={listBooks?.result} actions={actions} />
       {/* Phân trang */}
-      <div className="flex justify-between items-center mt-6">
-        <button
-          disabled={page === 1}
-          onClick={() => handlePageChange(page - 1)}
-          className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Trước
-        </button>
-        <span className="text-gray-700">
-          Trang {page} / {listBooks?.totalPages}
-        </span>
-        <button
-          disabled={page === listBooks?.totalPages}
-          onClick={() => handlePageChange(page + 1)}
-          className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Sau
-        </button>
-      </div>
+
+      <Pagination page={page} listBooks={listBooks} handlePageChange={handlePageChange} />
 
       {/* Modal Tạo sách */}
       <Modal

@@ -1,3 +1,4 @@
+const { generateToken } = require("../Middleware/baseToken");
 // 200 , 400 , 500
 const date = new Date();
 const successCode = (res, data, message) => {
@@ -5,6 +6,16 @@ const successCode = (res, data, message) => {
     statusCode: 200,
     message,
     content: data,
+    DateTime: date,
+  });
+};
+
+const successCodeLogin = (res, data, message) => {
+  res.status(200).json({
+    statusCode: 200,
+    message,
+    content: data,
+    "Token": generateToken(data),
     DateTime: date,
   });
 };
@@ -28,4 +39,5 @@ module.exports = {
   successCode,
   failCode,
   errorCode,
+  successCodeLogin
 };
