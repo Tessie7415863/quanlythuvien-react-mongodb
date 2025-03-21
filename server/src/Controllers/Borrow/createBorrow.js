@@ -5,14 +5,8 @@ const { failCode, successCode, errorCode } = require("../../config/response");
 
 const createBorrow = async (req, res) => {
   try {
-    const {
-      user,
-      book,
-      borrow_date,
-      return_date,
-      due_date,
-      status
-    } = req.body;
+    const { user, book, borrow_date, return_date, due_date, status } = req.body;
+    console.log(req.body);
 
     // Kiểm tra xem các trường có tồn tại trong database không
     const userExists = await User.findById(user);
@@ -28,7 +22,7 @@ const createBorrow = async (req, res) => {
       borrow_date,
       return_date,
       due_date,
-      status
+      status,
     });
 
     return successCode(res, book, "Tạo phiếu mượn thành công");

@@ -16,7 +16,9 @@ const BookSchema = new Schema(
     isbn: {
       type: String,
     },
-
+    image: {
+      type: String,
+    },
     author: {
       type: Schema.Types.ObjectId, //Khi liên kết, type phải là ObjectID
       ref: "Author", // Liên kết với Author model\

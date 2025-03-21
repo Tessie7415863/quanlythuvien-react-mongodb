@@ -2,10 +2,13 @@ const User = require("../../Models/User.model");
 const { failCode, successCode, errorCode } = require("../../config/response");
 
 const getAllUsers = async (req, res) => {
-  const { keyword, sortBy = "first_name",
+  const {
+    keyword,
+    sortBy = "first_name",
     page = 1,
     limit = 10,
-    order = "asc" } = req.query;
+    order = "asc",
+  } = req.query;
   try {
     const filter = keyword
       ? { first_name: { $regex: new RegExp(keyword, "i") } }
@@ -19,19 +22,27 @@ const getAllUsers = async (req, res) => {
     const result = await User.find(filter)
       .sort({ [sortBy]: sortOrder })
       .skip(skip)
-      .limit(limitInt)
-    const totalUsers = await User.countDocuments(filter)
+      .limit(limitInt);
+    const totalUsers = await User.countDocuments(filter);
     const totalPages = Math.ceil(totalUsers / limitInt);
     if (!keyword || !sortBy || !page || !limit || !order) {
-      const result = await User.find()
-      return successCode(res, { result, totalUsers }, "lấy danh sách user thông");
+      const result = await User.find();
+      return successCode(
+        res,
+        { result, totalUsers },
+        "lấy danh sách user thông"
+      );
     }
     if (result) {
-      return successCode(res, { result, totalUsers, page: pageInt, totalPages: totalPages }, "lấy danh sách user thành công");
+      return successCode(
+        res,
+        { result, totalUsers, page: pageInt, totalPages: totalPages },
+        "lấy danh sách user thành công"
+      );
     }
     return failCode(res, "", "Danh sách user trống");
   } catch (error) {
-    return errorCode(error, "Lỗi 500");
+    return errorCode(res, "Lỗi 500");
   }
 };
 module.exports = { getAllUsers };

@@ -38,12 +38,13 @@ const createBook = require("./Book/createBook");
 const getAllBooks = require("./Book/getAllBooks");
 const updateBooks = require("./Book/updateBook");
 const deleteBooks = require("./Book/deleteBook");
-
+const getBookById = require("./Book/getBookById");
 //Borrow
 const createBorrow = require("./Borrow/createBorrow");
 const updateBorrow = require("./Borrow/updateBorrow");
 const deleteBorrow = require("./Borrow/deleteBorrow");
 const getAllBorrows = require("./Borrow/getAllBorrows");
+const getBorrowsByUserId = require("./Borrow/getBorrowsByUserId");
 //book
 rootRoute.use("/auth", signUp);
 rootRoute.use("/auth", login);
@@ -83,12 +84,12 @@ rootRoute.use("/book", createBook);
 rootRoute.use("/book", getAllBooks);
 rootRoute.use("/book", updateBooks);
 rootRoute.use("/book", deleteBooks);
-
+rootRoute.use("/book", getBookById);
 //Borrow
 rootRoute.use("/borrow", createBorrow);
 rootRoute.use("/borrow", updateBorrow);
 rootRoute.use("/borrow", deleteBorrow);
 rootRoute.use("/borrow", getAllBorrows);
-
-//nhớ export 
+rootRoute.use("/borrow", getBorrowsByUserId);
+//nhớ export
 module.exports = rootRoute;

@@ -1,5 +1,9 @@
 const User = require("../../Models/User.model");
-const { failCode, errorCode, successCodeLogin } = require("../../config/response");
+const {
+  failCode,
+  errorCode,
+  successCodeLogin,
+} = require("../../config/response");
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -11,6 +15,7 @@ const login = async (req, res) => {
       return successCodeLogin(
         res,
         {
+          _id: checkEmail._id,
           username: checkEmail.username,
           first_name: checkEmail.first_name,
           last_name: checkEmail.last_name,
