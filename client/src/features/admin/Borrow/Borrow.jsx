@@ -9,6 +9,9 @@ import { CallGetAllUsers } from '../../../redux/reducers/user/getAllUser';
 import Swal from 'sweetalert2';
 import { CallUpdateBorrow } from '../../../redux/reducers/borrows/updateBorrow';
 import { CallCreateBorrow } from '../../../redux/reducers/borrows/createBorrow';
+import { CallDeleteBorrow } from '../../../redux/reducers/borrows/deleteBorrow';
+import ModalDelete from './Modal/ModalDelete';
+import io from "socket.io-client";
 
 export default function Borrow() {
     const [formData, setFormData] = useState({
@@ -27,8 +30,8 @@ export default function Borrow() {
     const listBorrows = useSelector((state) => state.getAllBorrows.listBorrows);
     const listBooks = useSelector((state) => state.getAllBooks.listBooks);
     const listUsers = useSelector((state) => state.getAllUsers.listUsers);
-    console.log(listBooks);
-    console.log(listUsers);
+    // console.log(listBooks);
+    // console.log(listUsers);
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -63,13 +66,49 @@ export default function Borrow() {
         fetchUsers();
     }, [dispatch, keyword, page, limit, order]);
 
-    //Hàm xử lý khi người dùng ấn nút xác nhận xóa
+    //Hàm xử lý khi người dùng ấn nút xóa
     const handleOpenModalDelete = async (borrowId) => {
         setIsOpenModalDelete(true);
         setIdBorrow(borrowId);
     }
 
-    //Hàm xử lý khi người dùng ấn nút sửa
+    //Hàm xử lý khi người dùng muốn XÁC NHẬN XÓA 
+    const handleSubmitDelete = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await CallDeleteBorrow(idBorrow);
+            console.log(res);
+
+            if (res?.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Phiếu mượn đã dược xóa!",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+                await dispatch(
+                    CallGetAllBorrows({
+                        keyword,
+                        sortBy: "user.id",
+                        page,
+                        limit,
+                        order,
+                    }));
+                setIsOpenModalDelete(false);
+            } else {
+                throw new Error("Không thể xóa phiếu mượn.");
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi xóa sách",
+                text: error.message || "Có lỗi xảy ra, vui lòng thử lại.",
+            });
+        }
+
+    }
+
+    //Hàm xử lý khi  ấn nút sửa
     const handleEdit = (borrow) => {
         setIsEdit(true);
         setIsModalOpen(true);
@@ -84,6 +123,7 @@ export default function Borrow() {
         setIdBorrow(borrow._id);
     };
 
+    //Hàm xử lý reset form khi đóng modal, tạo thành công hoặc cập nhật thành công
     const handleResetForm = () => {
         setFormData({
             user: "",
@@ -94,6 +134,19 @@ export default function Borrow() {
             status: "",
         });
     };
+
+    const socket = io("http://localhost:3000/"); // Cấu hình địa chỉ server
+
+    useEffect(() => {
+        socket.on("newBorrowCreated", (newBorrow) => {
+            // Có thể cập nhật redux store trực tiếp hoặc gọi lại API lấy danh sách mới:
+            dispatch(CallGetAllBorrows({ keyword, sortBy: "user.username", page, limit, order }));
+        });
+
+        return () => {
+            socket.off("newBorrowCreated");
+        };
+    }, [dispatch, keyword, page, limit, order]);
 
     const handleSearch = (e) => {
         setKeyword(e.target.value);
@@ -144,7 +197,7 @@ export default function Borrow() {
             } catch (error) {
                 Swal.fire({
                     icon: "error",
-                    title: "Lỗi cập nhật sách",
+                    title: "Lỗi cập nhật",
                     text: error.message || "Có lỗi xảy ra, vui lòng thử lại.",
                 });
             }
@@ -155,7 +208,7 @@ export default function Borrow() {
                 if (res?.status === 200) {
                     Swal.fire({
                         icon: "success",
-                        title: "Tạo môn phiếu muien thanh cong!",
+                        title: "Tạo phiếu mượn thành công!",
                         showConfirmButton: false,
                         timer: 2000,
                     });
@@ -174,7 +227,7 @@ export default function Borrow() {
             } catch (error) {
                 Swal.fire({
                     icon: "error",
-                    title: "Lỗi tạo môn phiếu mượn",
+                    title: "Lỗi tạo phiếu mượn",
                     text: error.message || "Có lỗi xảy ra.",
                 });
             }
@@ -183,8 +236,24 @@ export default function Borrow() {
 
     // Cấu hình bảng
     const columns = [
-        { key: "user.username", label: "Sinh Viên" },
-        { key: "book.title", label: "Sách" },
+        {
+            key: "user",
+            label: "Sinh Viên",
+            render: (row) => {
+                const userData = listUsers?.result?.find(user => user._id === row.user);
+                console.log(row.user);
+
+                return userData ? userData.username : 'N/A';
+            }
+        },
+        {
+            key: "book",
+            label: "Sách",
+            render: (row) => {
+                const bookData = listBooks?.result?.find(book => book._id === row.book);
+                return bookData ? bookData.title : 'N/A';
+            }
+        },
         { key: "borrow_date", label: "Ngày mượn" },
         { key: "return_date", label: "Ngày trả" },
         { key: "due_date", label: "Ngày hẹn trả" },
@@ -211,6 +280,7 @@ export default function Borrow() {
             name: "user",
             label: "Sinh Viên",
             type: "select",
+            placeholder: "Chọn sinh viên",
             options: listUsers?.result?.map((user) => ({
                 value: user._id,
                 label: user.first_name + " " + user.last_name,
@@ -249,11 +319,22 @@ export default function Borrow() {
 
             {/* Bảng */}
             <ReusableTable columns={columns} data={listBorrows?.result} actions={actions} />
-            <ModalReusable isOpen={isModalOpen} setIsOpen={setIsModalOpen} title={"Phiếu mượn"} fields={fields} formData={formData} handleChange={handleChange} handleSubmit={setFormData} isEdit={isEdit} id={idBorrow} handleResetForm={() => setFormData({
-                title: "",
-                author: "",
-                image: "",
-            })} />
+            <ModalReusable
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen} title={"Phiếu mượn"}
+                fields={fields}
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                isEdit={isEdit} id={idBorrow}
+                handleResetForm={handleResetForm}
+
+            />
+            <ModalDelete
+                isOpenModalDelete={isOpenModalDelete}
+                setIsOpenModalDelete={setIsOpenModalDelete}
+                handleSubmitDelete={handleSubmitDelete}
+            />
         </div>
     )
 }

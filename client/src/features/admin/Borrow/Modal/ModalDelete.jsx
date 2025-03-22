@@ -1,18 +1,22 @@
 import React from 'react'
 
-function ModalDelete({ isOpenModalDelete, setIsOpenModalDelete, handleSubmitDelete }) {
+export default function ModalDelete({ isOpenModalDelete, setIsOpenModalDelete, handleSubmitDelete }) {
     if (!isOpenModalDelete) return null;
     return (
         <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen px-4">
                 {/* Overlay */}
-                <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsOpenModalDelete(false)}>
-                </div>
+                <div
+                    className="fixed inset-0 bg-black opacity-50"
+                    onClick={() => setIsOpenModalDelete(false)}
+                ></div>
                 {/* Modal content */}
-                <div className='white rounded-lg shadow-lg relative z-10 w-full max-w-md p-6'>
-                    <h3 className='text-xl font-semibold text-gray-800 mb-4'>Xác nhận xóa</h3>
-                    <p className='text-gray-600 mb-6'>Bạn có chắc chắn muốn xóa tác giả này không?</p>
-                    <div className='flex justify-end gap-2'>
+                <div className="bg-white rounded-lg shadow-lg relative z-10 w-full max-w-md p-6">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Xác nhận xóa</h3>
+                    <p className="text-gray-600 mb-6">
+                        Bạn có chắc chắn muốn xóa phiếu mượn này không?
+                    </p>
+                    <div className="flex justify-end gap-2">
                         <button
                             type="button"
                             onClick={() => setIsOpenModalDelete(false)}
@@ -24,7 +28,8 @@ function ModalDelete({ isOpenModalDelete, setIsOpenModalDelete, handleSubmitDele
                             type="button"
                             onClick={handleSubmitDelete}
                             className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
-                        >Xóa
+                        >
+                            Xóa
                         </button>
                     </div>
                 </div>
@@ -32,5 +37,3 @@ function ModalDelete({ isOpenModalDelete, setIsOpenModalDelete, handleSubmitDele
         </div>
     )
 }
-
-export default ModalDelete

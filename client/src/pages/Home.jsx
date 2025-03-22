@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { useDispatch, useSelector } from "react-redux";
 import { CallGetALlBooks } from "../redux/reducers/books/getAllBooks";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const [open, setOpen] = useState(false);
@@ -35,7 +36,7 @@ export default function Home() {
     }, []);
 
     return (
-        <main className="mx-auto mt-0 pt-24 p-6 bg-blue-200 shadow-lg rounded-lg  dark:shadow-2xl">
+        <main className="mx-auto mt-0 pt-24 p-6 bg-blue-200 shadow-lg rounded-lg dark:shadow-2xl">
             <aside>
                 <h1 className="text-4xl font-semibold text-center text-gray-800 mb-4 dark:text-gray-900" data-aos="fade-up">
                     Chào mừng đến <span className="wave-effect">ITCLib</span> - Thư viện số của bạn
@@ -57,7 +58,7 @@ export default function Home() {
                 </div>
 
                 <div className="relative flex flex-col items-center mt-6">
-                    <input type="text" placeholder="Tìm kiếm sách, tài liệu" className="input w-full max-w-md p-2 border rounded" value={keyword} onChange={(e) => setKeyword(e.target.value)} onFocus={() => setOpen(true)} onBlur={() => setTimeout(() => setOpen(false), 200)} />
+                    <input type="text" placeholder="Tìm kiếm sách, tài liệu" className="input w-full max-w-md p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" value={keyword} onChange={(e) => setKeyword(e.target.value)} onFocus={() => setOpen(true)} onBlur={() => setTimeout(() => setOpen(false), 200)} />
                     {open && keyword && (
                         <ul className="absolute bg-white dark:bg-gray-800 border mt-14 rounded-lg shadow-lg z-10 overflow-auto max-h-40 w-full max-w-md">
                             {listBooks?.result && listBooks.result.length > 0 ? (
@@ -82,7 +83,7 @@ export default function Home() {
                         <Swiper navigation pagination modules={[Navigation, Pagination]} className="mySwiper">
                             {["/images/lib5.jpg", "/images/lib6.jpg", "/images/lib7.jpg"].map((src, index) => (
                                 <SwiperSlide key={index}>
-                                    <img src={src} alt={`Library ${index}`} className="rounded-lg w-full min-h-[340px] h-[340px] object-cover" />
+                                    <img src={src} alt={`Library ${index}`} className="rounded-lg w-full h-auto object-cover" />
                                 </SwiperSlide>
                             ))}
                         </Swiper>
@@ -93,12 +94,15 @@ export default function Home() {
                         <div className="mt-4 flex flex-col sm:flex-row gap-4 w-full">
                             {[
                                 { title: "📚 Sách", desc: "Kho tàng sách học thuật.", link: "/book", color: "bg-green-500 hover:bg-blue-600" },
-                                { title: "📄 Tài Liệu", desc: "Kho tài liệu học tập chất lượng.", link: "/tai-lieu", color: "bg-green-500 hover:bg-green-600" }
+                                { title: "📄 Tài Liệu", desc: "Kho tài liệu học tập chất lượng.", link: "/tai-lieu", color: "bg-green-500 hover:bg-green-600" },
+
                             ].map((item, index) => (
                                 <div key={index} className="w-full sm:w-1/2 bg-white p-4 shadow rounded-lg text-center dark:bg-gray-800">
                                     <h4 className="text-lg font-semibold text-gray-800 dark:text-white">{item.title}</h4>
                                     <p className="text-gray-600 mt-2 text-left dark:text-gray-300">{item.desc}</p>
-                                    <a href={item.link} className={`mt-4 text-white px-4 py-2 rounded-lg ${item.color} dark:bg-blue-600 dark:hover:bg-blue-800`}>Xem ngay</a>
+                                    <Link to={item.link} className={`mt-4 text-white px-4 py-2 rounded-lg ${item.color} dark:bg-blue-600 dark:hover:bg-blue-800`}>
+                                        Xem ngay
+                                    </Link>
                                 </div>
                             ))}
                         </div>

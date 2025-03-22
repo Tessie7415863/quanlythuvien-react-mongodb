@@ -10,6 +10,9 @@ const ModalReusable = ({
     handleSubmit,
     isEdit,
     handleResetForm,
+    isOpenModalDelete,
+    setIsOpenModalDelete,
+    handleSubmitDelete
 }) => {
     return (
         <div className={`${isOpen ? "fixed inset-0 z-50 overflow-y-auto" : "hidden"}`}>

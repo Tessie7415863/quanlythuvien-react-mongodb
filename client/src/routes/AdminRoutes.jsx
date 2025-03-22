@@ -9,6 +9,7 @@ import Department from "../features/admin/Department/Department.jsx";
 import Major from "../features/admin/Major/Major.jsx";
 import User from "../features/admin/User/User.jsx";
 import Borrow from "../features/admin/Borrow/Borrow.jsx";
+import AdminExportTopic from "../features/admin/ExportTopic/ExportTopic.jsx";
 export default function AdminRoutes() {
   return (
     <Routes element={<AdminLayout />}>
@@ -20,6 +21,8 @@ export default function AdminRoutes() {
         <Route path="major" element={<Major />} />
         <Route path="user" element={<User />} />
         <Route path="borrow" element={<Borrow />} />
+        <Route path="exporttopic" element={<AdminExportTopic />} />
+
       </Route>
     </Routes>
   );

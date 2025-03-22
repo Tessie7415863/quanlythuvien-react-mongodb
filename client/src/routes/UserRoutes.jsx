@@ -7,6 +7,7 @@ import SignUp from "../pages/auth/SignUp";
 import Book from "../features/user/Book.jsx";
 import BorrowBook from "../features/user/BorrowBook.jsx";
 import BorrowHistory from "../features/user/BorrowHistory.jsx";
+import ExportTopic from "../features/user/ExportTopic.jsx";
 export default function UserRoutes() {
   return (
     <Routes>
@@ -15,6 +16,7 @@ export default function UserRoutes() {
         <Route path="book" element={<Book />} />
         <Route path="borrow-book/:id" element={<BorrowBook />} />
         <Route path="borrow-history" element={<BorrowHistory />} />
+        <Route path="de-xuat" element={<ExportTopic />} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />

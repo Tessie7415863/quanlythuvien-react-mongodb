@@ -3,7 +3,6 @@ const getNestedValue = (obj, key) => {
 };
 
 const ReusableTable = ({ columns, data, actions }) => {
-  console.log(columns.key === "image");
   if (!data) return <div>Loading...</div>;
 
   return (

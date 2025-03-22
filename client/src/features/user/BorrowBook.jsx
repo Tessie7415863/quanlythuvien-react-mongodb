@@ -5,10 +5,13 @@ import { CallCreateBorrow } from "../../redux/reducers/borrows/createBorrow";
 import { Card, Button, Form, DatePicker, Row, Col } from "antd";
 import moment from "moment";
 import Swal from "sweetalert2";
+import io from "socket.io-client";
+
 export default function BorrowBook() {
   const [form] = Form.useForm();
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const socket = io("http://localhost:3000");
 
   useEffect(() => {
     const fetchBookById = async () => {
@@ -42,6 +45,10 @@ export default function BorrowBook() {
         text: "Vui lòng thử lại!",
       });
     }
+    // Sau khi mượn sách thành công
+    await CallCreateBorrow(valuesToSubmit);
+    socket.emit("newBorrowCreated");
+
   };
   if (!book) {
     return <div className="text-center">Đang tải dữ liệu sách...</div>;
@@ -49,6 +56,7 @@ export default function BorrowBook() {
   if (!dataUser) {
     return <Navigate to="/login" />;
   }
+
   return (
     <div className="flex justify-center items-center min-h-[80vh] p-4 ">
       <Card className="w-full max-w-5xl h-full p-6 shadow-lg rounded-lg bg-white">

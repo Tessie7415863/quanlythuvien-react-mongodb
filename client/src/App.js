@@ -10,9 +10,10 @@ import RequireAuth from './routes/RequireAuth.jsx';
 function App() {
   return (
     <Routes>
-      //Routes của người dùng
+      {/* Routes của người dùng */}
       <Route path="/*" element={<UserRoutes />} />
-      //Routes của admin, khi mà muốn truy cập vào admin nó sẽ chạy element RequireAuth trước
+
+      {/* Routes của admin, khi mà muốn truy cập vào admin nó sẽ chạy element RequireAuth trước */}
       <Route element={<RequireAuth />}>
         <Route path="admin/*" element={<AdminRoutes />} />
       </Route>

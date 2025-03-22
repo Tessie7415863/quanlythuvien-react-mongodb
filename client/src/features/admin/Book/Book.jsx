@@ -270,6 +270,7 @@ const BookForm = () => {
   const handlePageChange = (page) => {
     setPage(page);
   };
+
   // Cấu hình bảng
   const columns = [
     { key: "title", label: "Tên sách" },
@@ -298,6 +299,7 @@ const BookForm = () => {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Header */}
       <HeaderAndSearch
         keyword={keyword}
         handleSearch={handleSearch}

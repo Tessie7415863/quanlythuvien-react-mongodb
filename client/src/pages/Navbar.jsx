@@ -63,7 +63,7 @@ export default function NavBar() {
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
                 <a
-                  href="quan-ly-tai-khoan"
+                  href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >
                   Quản lý tài khoản
@@ -71,7 +71,7 @@ export default function NavBar() {
               </li>
               <li>
                 <a
-                  href="borrow-history"
+                  href="/borrow-history"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >
                   Lịch sử mượn trả
