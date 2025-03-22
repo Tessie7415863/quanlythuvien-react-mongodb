@@ -6,15 +6,17 @@ import getAllDepartments from "./reducers/departments/getAllDepartments";
 import getAllSubjects from "./reducers/subjects/getAllSubjects";
 import getAllUsers from "./reducers/user/getAllUser";
 import getAllBorrows from "./reducers/borrows/getAllBorrows";
+import getAllSuggestions from "./reducers/suggestions/suggestionApi";
 export const store = configureStore({
-    reducer: {
-        getAllBooks,
-        getAllAuthors,
-        getAllMajors,
-        getAllDepartments,
-        getAllSubjects,
-        getAllUsers,
-        getAllBorrows
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
-})
+  reducer: {
+    getAllBooks,
+    getAllAuthors,
+    getAllMajors,
+    getAllDepartments,
+    getAllSubjects,
+    getAllUsers,
+    getAllBorrows,
+    getAllSuggestions,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});

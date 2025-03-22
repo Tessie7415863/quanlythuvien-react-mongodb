@@ -45,10 +45,8 @@ export default function BorrowBook() {
         text: "Vui lòng thử lại!",
       });
     }
-    // Sau khi mượn sách thành công
     await CallCreateBorrow(valuesToSubmit);
     socket.emit("newBorrowCreated");
-
   };
   if (!book) {
     return <div className="text-center">Đang tải dữ liệu sách...</div>;

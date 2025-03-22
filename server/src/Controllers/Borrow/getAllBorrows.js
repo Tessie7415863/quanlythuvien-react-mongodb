@@ -1,5 +1,3 @@
-const Book = require("../../Models/Book.model");
-const User = require("../../Models/User.model");
 const Borrow = require("../../Models/Borrow.model");
 const { failCode, successCode, errorCode } = require("../../config/response");
 
@@ -9,7 +7,7 @@ const getAllBorrows = async (req, res) => {
     order = "asc",
     sortby = "id",
     page = 1,
-    limit = 10
+    limit = 10,
   } = req.params;
   const { id } = req.params;
   try {
@@ -21,7 +19,8 @@ const getAllBorrows = async (req, res) => {
       return successCode(res, borrow, "Lấy dữ liệu phiếu mượn thành công");
     }
     // lọc theo keyword ?keyword=
-    const filter = keyword ? { user: { $regex: new RegExp(keyword, "i") } }
+    const filter = keyword
+      ? { user: { $regex: new RegExp(keyword, "i") } }
       : {};
     // sắp xếp theo sortBy ?sortBy=
     // sắp xếp theo order ?order=
@@ -42,7 +41,11 @@ const getAllBorrows = async (req, res) => {
     //Tính tổng số trang
     const totalPages = Math.ceil(totalBorrows / limitInt);
     if (result) {
-      return successCode(res, { result, totalBorrows, page: pageInt, totalPages: totalPages }, "Lấy danh sách phiếu mượn thành công");
+      return successCode(
+        res,
+        { result, totalBorrows, page: pageInt, totalPages: totalPages },
+        "Lấy danh sách phiếu mượn thành công"
+      );
     }
     return failCode(res, "", "Danh sách phiếu mượn trống");
   } catch (error) {

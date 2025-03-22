@@ -1,0 +1,23 @@
+Màu sắc: sửa màu theo bên trang cũ 
+logo kiếm mới 
+header - home- contact us 
+ở form thì cần những thông tin :
+category có api
+show category product
+product không có price chỉ có name, hình, description, nút.
+
+form submit 
+
+khi contact us không hiển thị item name, quantity 
+item name + quantity => chuỗi truyền qua db
+thanh toán code (ẩn đi sau này bật)
+//
+sort: bỏ price, reviews
+
+giao diện admin
+
+Quản lý product -> tạo, lấy.
+
+Coi Số submit trong ngày: 
+
+sell_receipt
